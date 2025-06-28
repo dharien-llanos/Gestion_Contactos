@@ -64,20 +64,40 @@ void eliminarContacto() {
             }
             totalContactos--;
             encontrado = true;
-            cout << "Contactoeleminado\n";
+            cout << "Contacto eliminado\n";
             break;
         }
     }
 
     if (!encontrado) {
-        cout << "Contactonoecontrado\n";
+        cout << "Contacto no econtrado\n";
+    }
+}
+
+void mostrarContactos() {
+    if (totalContactos == 0) {
+        cout << "No hay contactos registrados\n";
+        return;
+    }
+
+    cout << "\n---LISTADOCONTACTOS---\n";
+
+    for (int i = 0; i < totalContactos; i++) {
+        cout << "------------------------\n";
+        cout << "Nombre: " << contactos[i].nombreCompleto << endl;
+        cout << "Sexo: " << contactos[i].sexo << endl;
+        cout << "Edad: " << contactos[i].edad << endl;
+        cout << "Telefono: " << contactos[i].telefono << endl;
+        cout << "Email: " << contactos[i].email << endl;
+        cout << "Nacionalidad: " << contactos[i].nacionalidad << endl;
     }
 }
 void mostrarMenu() {
     cout << "\n=====MENU=====\n";
-    cout << "1.Agregarcontacto\n";
-    cout << "2.Eliminarcontacto\n";
-    cout << "3.Salir\n";
+    cout << "1.Agregar contacto\n";
+    cout << "2.Eliminar contacto\n";
+    cout << "3.Mostrar contactos\n";
+    cout << "4.Salir\n";
     cout << "Opcion: ";
 }
 int main() {
@@ -95,13 +115,16 @@ int main() {
                 eliminarContacto();
                 break;
             case 3:
+                mostrarContactos();
+                break;
+            case 4:
                 cout << "Saliendo del programa\n";
                 break;
             default:
                 cout << "Opcion no valida\n";
         }
 
-    } while (opcion != 3);
+    } while (opcion != 4);
 
     return 0;
 }
