@@ -44,14 +44,42 @@ void agregarContacto() {
 
     cout << "Contacto agregado correctamente\n";
 }
+void eliminarContacto() {
+    if (totalContactos == 0) {
+        cout << "No hay contactos registrados\n";
+        return;
+    }
 
+    string emailEliminar;
+    cout << "\n---ELIMINAR CONTACTO---\n";
+    cout << "Ingrese email: ";
+    cin >> emailEliminar;
+
+    bool encontrado = false;
+
+    for (int i = 0; i < totalContactos; i++) {
+        if (contactos[i].email == emailEliminar) {
+            for (int j = i; j < totalContactos - 1; j++) {
+                contactos[j] = contactos[j + 1];
+            }
+            totalContactos--;
+            encontrado = true;
+            cout << "Contactoeleminado\n";
+            break;
+        }
+    }
+
+    if (!encontrado) {
+        cout << "Contactonoecontrado\n";
+    }
+}
 void mostrarMenu() {
     cout << "\n=====MENU=====\n";
-    cout << "1.Agregar contacto\n";
-    cout << "2.Salir\n";
+    cout << "1.Agregarcontacto\n";
+    cout << "2.Eliminarcontacto\n";
+    cout << "3.Salir\n";
     cout << "Opcion: ";
 }
-
 int main() {
     int opcion;
 
@@ -64,13 +92,16 @@ int main() {
                 agregarContacto();
                 break;
             case 2:
+                eliminarContacto();
+                break;
+            case 3:
                 cout << "Saliendo del programa\n";
                 break;
             default:
                 cout << "Opcion no valida\n";
         }
 
-    } while (opcion != 2);
+    } while (opcion != 3);
 
     return 0;
 }
