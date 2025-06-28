@@ -14,6 +14,14 @@ const int MAX = 100;
 contactoEmail contactos[MAX];
 int totalContactos = 0;
 
+string obtenerServidor(string correo) {
+    int pos = correo.find('@');
+    if (pos != -1) {
+        return correo.substr(pos + 1);
+    }
+    return " ";
+}
+
 void agregarContacto() {
     if (totalContactos >= MAX) {
         cout << "Lista de contactos llena\n";
@@ -92,12 +100,43 @@ void mostrarContactos() {
         cout << "Nacionalidad: " << contactos[i].nacionalidad << endl;
     }
 }
+
+void mostrarOrdenadosPorServidor() {
+    if (totalContactos == 0) {
+        cout << "No hay contactos registrados\n";
+        return;
+    }
+
+    contactoEmail copia[MAX];
+    for (int i = 0; i < totalContactos; i++) {
+        copia[i] = contactos[i];
+    }
+
+    for (int i = 0; i < totalContactos - 1; i++) {
+        for (int j = i + 1; j < totalContactos; j++) {
+            if (obtenerServidor(copia[i].email) > obtenerServidor(copia[j].email)) {
+                contactoEmail temp = copia[i];
+                copia[i] = copia[j];
+                copia[j] = temp;
+            }
+        }
+    }
+    cout<<"\n---CONTACTOS ORDENADOS POR SERVIDOR---\n";
+      for (int i = 0; i < totalContactos; i++) {
+        cout << "------------------------\n";
+        cout << "Nombre: " << copia[i].nombreCompleto << endl;
+        cout << "Email: " << copia[i].email << " -> " << obtenerServidor(copia[i].email) << endl;
+        cout << "Telefono: " << copia[i].telefono << endl;
+    }
+}
+
 void mostrarMenu() {
     cout << "\n=====MENU=====\n";
     cout << "1.Agregar contacto\n";
     cout << "2.Eliminar contacto\n";
     cout << "3.Mostrar contactos\n";
-    cout << "4.Salir\n";
+    cout<<  "4.Mostrar ordenados por servidor\n";
+    cout << "5.Salir\n";
     cout << "Opcion: ";
 }
 int main() {
@@ -117,14 +156,17 @@ int main() {
             case 3:
                 mostrarContactos();
                 break;
-            case 4:
+           case 4:
+                mostrarOrdenadosPorServidor();
+                break;
+            case 5:
                 cout << "Saliendo del programa\n";
                 break;
             default:
                 cout << "Opcion no valida\n";
         }
 
-    } while (opcion != 4);
+    } while (opcion != 5);
 
     return 0;
 }
